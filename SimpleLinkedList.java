@@ -36,7 +36,61 @@ public class SimpleLinkedList {
     // If success, return true. Otherwise, return false.
     public boolean removeByValue(int item) {
         //add your own code
-        
+        Node Cur = this.head;
+        // this result will see if the given data to the method is even inside the list
+        // if it returns -1, the program returns false
+        // will also use this to determine which possible element to remove
+        int result =indexOf(item);
+        int index = 0;
+        if(result== -1){
+            return false;
+        }
+        // if it is the head that is ebign removed, 
+        if(this.size ==1){
+            Cur.next =Cur.next;
+            this.size--;
+            return true;
+        }
+        //Condtion for it the head is the chosen target
+        // if it has the same value as the result, chose the element in fromand make that the head instead
+        if(this.head.data == this.get(result)){
+            this.head =Cur.next;
+            this.size--;
+            return true;
+        }
+
+        // if the tail is being removed, comparing the size of the list and the index of the result
+        // if the size-1 of our list is equal to the result, then we can easliy say that this 
+        // is the tail and it should eb removed by going back 2 indexes, pointeing the resulting element to null
+        if(this.size-1 ==result){
+            // gnna be an 0(n) to look for the 
+            
+            //copy of the  current linked list 
+            Node Cur2 = this.head;
+            // using this loop to look for the same index-1 to set the element before the given index to null, thus making the new element the 
+            // tail of the list
+            while(Cur2.next !=null){
+                if(index==this.size-2){
+                    Cur2.next = Cur2.next.next;
+                    this.size--;
+                    return true;
+                }
+                index++;
+                Cur2 =Cur2.next;
+            }
+        }
+        //shift the pointer to the next element and rename that as the the head
+        while(Cur.next != null){
+            if(index == result-1){
+                Cur.next = Cur.next.next;
+                this.size--;
+                return true;
+            }
+            Cur =Cur.next;
+            index++;
+
+        }
+
         //Hint:
         //  call your indexOf(...) to locate the item,
         //  convert the following in SingleLinkedList<E>
@@ -57,7 +111,7 @@ public class SimpleLinkedList {
     // if index is size, append item to the end of this linked list.
     public void add(int index, int item) {
         //add your own code
-        
+        //condition for it this item is at the end of the list
         //Hint:
         //convert the following in SingleLinkedList<E>
         //    public void add(int index, E item)
@@ -83,6 +137,7 @@ public class SimpleLinkedList {
         //Iterator for this list, will use the next method until index is found and will retrun dta from that mode
        for(int i =0; i<=index;i++){
             if(i == index){
+                //the target value we're looking for 
                 Target = Current.data;
             }
             Current= Current.next;
@@ -245,7 +300,8 @@ public class SimpleLinkedList {
         SimpleLinkedList Link = new SimpleLinkedList();
         Link.add(255);
         Link.add(125);
-        Link.add(113);
-        System.out.println(Link.get(2));
+        //Link.add(113);
+        Link.removeByValue(255);
+        System.out.println(Link);
     }
 }

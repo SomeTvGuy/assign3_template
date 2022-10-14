@@ -1,5 +1,6 @@
 package assign3_template;
 
+import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.text.html.HTMLDocument.RunElement;
 
 //File: SimpleLinkedList.java. 
@@ -52,7 +53,7 @@ public class SimpleLinkedList {
             return true;
         }
         //Condtion for it the head is the chosen target
-        // if it has the same value as the result, chose the element in fromand make that the head instead
+        // if it has the same value as the result, choses the element in front of it and make that the head instead
         if(this.head.data == this.get(result)){
             this.head =Cur.next;
             this.size--;
@@ -111,6 +112,16 @@ public class SimpleLinkedList {
     // if index is size, append item to the end of this linked list.
     public void add(int index, int item) {
         //add your own code
+        // Node for head fpr while loops to iterate over
+        Node temp = this.head;
+        int count =0;
+        if(index ==0|| index== size-1){
+            while(temp.next!=null){
+                if(index-1 == count){
+                    temp.next =item;
+                }
+            }
+        }
         //condition for it this item is at the end of the list
         //Hint:
         //convert the following in SingleLinkedList<E>
@@ -215,7 +226,51 @@ public class SimpleLinkedList {
     //   and return Integer.MIN_VALUE.
     public int removeByIndex(int index) {
         //Add your own code
-     
+        //Borrorwed from data;
+        //data for each item removed
+        int data= 0;
+        //condition for bounds of the array
+        int count =0;
+        if(index > this.size || index<0){
+            throw new IndexOutOfBoundsException("lol");
+        }
+        Node CurNode = this.head;
+        //conditional for head( if its just the head or it just has one element)
+        if(this.size == 1 || index==0){
+            // stes the current cheads reffence to the next current node
+            data= this.head.data;
+            this.head =CurNode.next;
+            //setting the next node head, at least 1 in front of itself 
+            CurNode.next =CurNode.next.next;
+            
+            this.size--;
+            return data;
+        }//condtional for it its the last element
+        if(this.size-1 ==index){
+            // while loop ierator, will go back 2 speesa dn replace the tail node with the node behind it
+            while(CurNode.next != null){
+                if(count == index-1){ 
+                    data= CurNode.next.data;
+                    CurNode.next =CurNode.next.next;
+                    this.size--;
+                    return data;
+                }   
+                CurNode= CurNode.next;
+                count++;
+            }   
+        }
+        while(CurNode.next != null){
+            // tells the element beofre the found index to skip the element and se ethe one in front of it
+            if(count == index-1){ 
+                data= CurNode.next.data;
+                CurNode.next =CurNode.next.next;
+                this.size--;
+                return data;
+            }   
+            CurNode= CurNode.next;
+            count++;
+        
+        }
         //Hint:        
         //verify that index is valid
         //convert the following in SingleLinkedList<E>
@@ -226,7 +281,7 @@ public class SimpleLinkedList {
         //   predecessor node reference        
         //   current node reference
         
-        return 2;
+        return -1;
     }
 
     //-------End of Assign 3 --------/ 
@@ -300,8 +355,10 @@ public class SimpleLinkedList {
         SimpleLinkedList Link = new SimpleLinkedList();
         Link.add(255);
         Link.add(125);
-        //Link.add(113);
-        Link.removeByValue(255);
+        Link.add(113);
+        Link.add(999);
+        //Link.removeByValue(255);
+        Link.removeByIndex(3);
         System.out.println(Link);
     }
 }

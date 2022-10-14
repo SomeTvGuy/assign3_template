@@ -114,15 +114,52 @@ public class SimpleLinkedList {
         //add your own code
         // Node for head fpr while loops to iterate over
         Node temp = this.head;
+        // error handling for if the given index isn't within the range of the current list
+        if(index<0){
+            throw new IndexOutOfBoundsException("Please type in a range that isn't negative");
+        }
+            // Node for new item
+        Node New_Item= new Node(item);
+        // this will act our index for now 
+        // this will increment and be compared to the current index 
         int count =0;
-        if(index ==0|| index== size-1){
+        // if the index is 0 or anything afterwards
+        //  point the next node to the given item 
+        // point the next item to the item after its predecessor
+        if(index >=0 || index == (this.size-1)){
             while(temp.next!=null){
-                if(index-1 == count){
-                    temp.next =item;
+                if(count == index){
+                    New_Item.next = temp.next;
+                    temp.next =New_Item; 
+                    this.size++;                   
                 }
+                temp= temp.next;
+                count++;
+                // this condition supposesdely covers  ofr indexes that aer the exact length of the list
+                if(temp.next.next ==null){
+                    New_Item.next = temp.next;
+                    temp.next =New_Item; 
+                    this.size++;
+                    break;                   
+                    }
+                }
+        }
+        
+        //ressetting values for this one
+        temp =this.head;
+        count=0;
+        //condition for it this item is at the end of the list
+        if(index == this.size){
+            while(count != index){
+                if(temp.next==null){
+                    New_Item.next = temp.next;
+                    temp.next =New_Item;
+                    this.size++;                    
+                }
+                temp =temp.next;
+                count++;
             }
         }
-        //condition for it this item is at the end of the list
         //Hint:
         //convert the following in SingleLinkedList<E>
         //    public void add(int index, E item)
@@ -358,7 +395,7 @@ public class SimpleLinkedList {
         Link.add(113);
         Link.add(999);
         //Link.removeByValue(255);
-        Link.removeByIndex(3);
+        Link.add(3, 15);
         System.out.println(Link);
     }
 }

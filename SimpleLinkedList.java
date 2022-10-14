@@ -1,5 +1,7 @@
 package assign3_template;
 
+import javax.swing.text.html.HTMLDocument.RunElement;
+
 //File: SimpleLinkedList.java. 
 //Add a file header comment or a class header comment to your work.
 /*
@@ -70,13 +72,28 @@ public class SimpleLinkedList {
     //  and return Integer.MIN_VALUE.
     public int get(int index) {
         //add your own code
-        
+        // Will need a Node to count throguh (All of this feels very 0(n))
+        Node Current = this.head;
+        // if the sleected index isnt valid it throws an index out of bounds error
+        // and returns integer min val like ya asked
+        int Target =0;
+        if( index <0 || index>= this.size){
+            throw  new ArrayIndexOutOfBoundsException("It Seems that the index is out of range of this list");
+        }
+        //Iterator for this list, will use the next method until index is found and will retrun dta from that mode
+       for(int i =0; i<=index;i++){
+            if(i == index){
+                Target = Current.data;
+            }
+            Current= Current.next;
+       }
+
         //Hint:
 	//convert the following in SingleLinkedList<E>
         //    public E get(int index)
         //    private Node<E> getNode(int index)       
         
-        return 2;
+        return Target;
 
     }
 
@@ -85,17 +102,21 @@ public class SimpleLinkedList {
     public int indexOf(int item) {
         //add your own code
         // need a refference for the head of the linked list
-        Node head = this.head;
+        Node currentNode = this.head;
         //condition if head points to null, if it does and the index given isn't zero return -1
         // this counts the number of elements and the 
         int index = 0;
-        if(head.next == null){
-            return head.data;
+        if(currentNode.data == item){
+            return index;
         }
-        // a whie loop tthat ierates over the linked list, updating the head node if head points to null
-        while(head.next != null){
+        // a whie loop tthat ierates over the linked list, upnting the head node if head points to null
+        while(currentNode.next != null){
             index++;
-
+            currentNode = currentNode.next;
+            //this will increment the ndoe value to next, if next == null this loop will simply conclude
+            if(currentNode.data == item){
+                return index;
+            }
         }
         //Hint:
         //use a looping like the one in toString()
@@ -110,10 +131,15 @@ public class SimpleLinkedList {
     // Returns true if yes, false otherwise.
     public boolean contains(int item) {
         //add your own code
-        
+        // this condistion gauges n if he indexof method is able to find the associated item
+        // if the result isn't -1 then return true, if it is -1 return false
+        if(indexOf(item) !=-1){
+            return true;
+        }
         //Hint:
         //can either call indexOf(...) 
         //    or directly search for the item using a loop like the one in toString()
+
 
         return false;
     }
@@ -214,5 +240,12 @@ public class SimpleLinkedList {
             current = current.next; //move on to the next Node
         }
         return result;
+    }
+    public static void main(String[] args) {
+        SimpleLinkedList Link = new SimpleLinkedList();
+        Link.add(255);
+        Link.add(125);
+        Link.add(113);
+        System.out.println(Link.get(2));
     }
 }
